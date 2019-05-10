@@ -1,0 +1,95 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/Player/idle0.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Player/idle2.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Player/idle1.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Player/run0.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/Player/run1.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/Player/run2.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/Player/jump0.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/Player/jump1.png" type="Texture" id=9]
+[ext_resource path="res://Sprites/Player/jump2.png" type="Texture" id=10]
+[ext_resource path="res://Sprites/Tilesets/exterior-parallaxBG1.png" type="Texture" id=11]
+[ext_resource path="res://Scripts/PC.gd" type="Script" id=12]
+[ext_resource path="res://Sprites/PC/PC.png" type="Texture" id=13]
+[ext_resource path="res://Tiles.res" type="TileSet" id=14]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "Run",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "Jump",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 10.9585, 16.9457 )
+
+[sub_resource type="CapsuleShape2D" id=3]
+
+[node name="Game" type="Node"]
+
+[node name="Player" type="Node" parent="."]
+
+[node name="Player" type="KinematicBody2D" parent="Player"]
+position = Vector2( 27.9183, 28.8877 )
+z_index = 100
+script = ExtResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Player/Player"]
+frames = SubResource( 1 )
+animation = "Run"
+frame = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Player"]
+shape = SubResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="Player/Player"]
+current = true
+zoom = Vector2( 0.5, 0.5 )
+smoothing_enabled = true
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="Player"]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="Player/ParallaxBackground"]
+position = Vector2( -230, -150 )
+motion_scale = Vector2( 0, 0 )
+motion_mirroring = Vector2( 256, 0 )
+
+[node name="Sprite" type="Sprite" parent="Player/ParallaxBackground/ParallaxLayer"]
+texture = ExtResource( 11 )
+centered = false
+
+[node name="PC" type="Node" parent="."]
+
+[node name="PC" type="Area2D" parent="PC"]
+position = Vector2( -400, -90 )
+z_index = 100
+script = ExtResource( 12 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PC/PC"]
+position = Vector2( 785, 430 )
+shape = SubResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="PC/PC"]
+position = Vector2( 785, 430 )
+texture = ExtResource( 13 )
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 14 )
+cell_size = Vector2( 5, 5 )
+cell_quadrant_size = 10
+format = 1
+tile_data = PoolIntArray( -2883593, 6, 0, -2949039, 6, 0, -2293769, 6, 0, -2359215, 6, 0, -1703945, 6, 0, -1769391, 6, 0, -1114121, 6, 0, -1179567, 6, 0, -851950, 5, 0, -524297, 6, 0, -589743, 6, 0, 65527, 6, 0, 81, 6, 0, 655351, 6, 0, 589824, 7, 0, 589833, 7, 0, 589842, 7, 0, 589875, 7, 0, 589905, 6, 0, 589914, 6, 0, 589923, 6, 0, 589924, 6, 0, 786459, 2, 0, 786467, 2, 0, 786474, 2, 0, 786475, 2, 0, 786492, 1, 0, 1245175, 6, 0, 1179729, 6, 0, 1179738, 6, 0, 1179747, 6, 0, 1179756, 6, 0, 1638472, 1, 0, 1834999, 6, 0, 1769580, 6, 0, 2424823, 6, 0, 2359316, 2, 0, 2359324, 2, 0, 2359332, 6, 0, 2359341, 6, 0, 2359350, 6, 0, 2359359, 6, 0, 2359368, 6, 0, 2359377, 6, 0, 2359386, 6, 0, 2359395, 6, 0, 2359404, 6, 0, 2359413, 6, 0, 2686976, 1, 0, 3014647, 6, 0, 2949219, 6, 0, 2949228, 6, 0, 2949237, 6, 0, 3342353, 1, 0, 3604453, 6, 0, 3604462, 6, 0, 3604471, 6, 0, 3539043, 6, 0, 3539052, 6, 0, 3539061, 6, 0, 3539070, 6, 0, 4063232, 2, 0, 4194277, 6, 0, 4587619, -1073741822, 0, 4784101, 6, 0, 4784110, 6, 0, 4784119, 6, 0, 4718592, 6, 0, 4718601, 6, 0, 4718610, 6, 0, 4718619, 6, 0, 4718628, 6, 0, 4718637, 6, 0, 4718646, 6, 0, 4718655, 6, 0, 4718664, 6, 0, 4718673, 6, 0, 4718682, 6, 0, 4718691, 6, 0, 4718700, 6, 0, 4718709, 6, 0, 4718718, 6, 0 )
+
